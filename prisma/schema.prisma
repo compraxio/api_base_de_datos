@@ -1,0 +1,133 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//*tablas sin relacione
+model contactos {
+  id_contacto Int  @id @default(autoincrement())
+  nombre      String?
+  telefono    String? @unique
+  correo      String? @unique
+}
+
+model municipios {
+  cod_munic    Int @id @default(autoincrement())
+  departamento String
+  zona         String
+  municipio    String
+}
+
+model estados {
+  estado     String  @id
+  des_estado String?
+}
+
+//*tablas con imagenes
+model productos {
+  id_prodcucto Int  @id @default(autoincrement()) // Nombre exacto del SQL
+  nombre       String?
+  descripcion  String?
+  precio       Int?
+  img_prodcto  String? // Nombre exacto del SQL
+}
+
+
+model fases {
+  id_fase   Int  @id @default(autoincrement())
+  des_fase  String
+  logo_fase String
+  id_fasex  String?
+}
+
+
+model videos {
+  id_video   Int  @id @default(autoincrement())
+  url_video  String?
+}
+
+model eventos {
+  id_evento        Int     @id @default(autoincrement())
+  evento           String
+  direccion        String
+  fecha            String?
+  hora             String?
+  link             String?
+  temas            String?
+  tipo_evento      String?
+  estado           String
+  Img_Presentacion String
+}
+
+//*tablas con relaciones
+model dir_verde {
+  id_negocio        Int                   @id @default(autoincrement())
+  negocio           String
+  id_grupo          Int
+  sub_categoria     String?
+  descripcion       String?
+  actividad         String
+  unidad_productiva String?
+  zona              String
+  municipio         String
+  direccion         String
+  representante     String?
+  whatsup           String?
+  logo              String?
+  url_youtube       String?
+  url_facebook      String?
+  url_instagram     String?
+  url_tiktok        String?
+  correo            String                   @unique
+  url_negocio       String?
+  pos_gps           String?
+  id_fase           Int?
+  estado            String?
+  ano_verificacion  Int?                     @map("año_verificacion")
+  autorizado_por    String?
+
+  // Relaciones
+  grupo             grupos                   @relation(fields: [id_grupo], references: [id_grupo])
+  criterios         dir_verde_vs_criterios[]
+  fotografias       fotografias[]
+}
+
+model grupos {
+  id_grupo   Int      @id @default(autoincrement())
+  actividad  String
+  logo_grupo String?
+  negocio    dir_verde[]
+}
+
+model criterios {
+  id_criterio Int                   @id
+  criterio    String
+  negocios    dir_verde_vs_criterios[]
+}
+
+model fotografias {
+  id_foto    Int    @id @default(autoincrement())
+  id_negocio Int
+  url_foto   String?
+  negocio    dir_verde @relation(fields: [id_negocio], references: [id_negocio])
+}
+
+model dir_verde_vs_criterios {
+  id_negocio  Int
+  id_criterio Int
+
+  negocio  dir_verde @relation(fields: [id_negocio], references: [id_negocio])
+  criterio criterios @relation(fields: [id_criterio], references: [id_criterio])
+
+  @@id([id_negocio, id_criterio])
+}
