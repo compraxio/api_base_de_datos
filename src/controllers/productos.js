@@ -93,12 +93,13 @@ export class productosController {
         });
       }
 
-      if (precio === undefined || Number.isNaN(Number(precio)) || Number(precio) < 0) {
+      if (typeof precio !== 'string' || precio.trim() === '') {
         return response.status(400).json({
           success: false,
-          message: 'El precio es obligatorio y debe ser un número válido mayor o igual a 0',
+          message: 'El precio es obligatorio y debe ser un texto válido',
         });
       }
+
 
       // ==========================
       // LLAMAR AL MODEL
@@ -107,7 +108,7 @@ export class productosController {
       const producto = await productosModel.create({
         nombre: nombre.trim(),
         descripcion: descripcion?.trim(),
-        precio: Number(precio),
+        precio: precio,
         img_prodcto,
       });
 
