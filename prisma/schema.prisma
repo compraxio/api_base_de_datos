@@ -38,7 +38,7 @@ model productos {
   id_prodcucto Int  @id @default(autoincrement()) // Nombre exacto del SQL
   nombre       String?
   descripcion  String?
-  precio       String?
+  precio       Int?
   img_prodcto  String? // Nombre exacto del SQL
 }
 

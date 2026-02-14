@@ -93,11 +93,13 @@ export class productosController {
         });
       }
 
-      if (typeof precio !== 'string' || precio.trim() === '') {
-        return response.status(400).json({
-          success: false,
-          message: 'El precio es obligatorio y debe ser un texto válido',
-        });
+      if (precio === undefined || Number.isNaN(Number(precio)) || Number(precio) < 0) {
+        return response
+          .status(400)
+          .json({
+            success: false,
+            message: 'El precio es obligatorio y debe ser un número válido mayor o igual a 0',
+          });
       }
 
 
