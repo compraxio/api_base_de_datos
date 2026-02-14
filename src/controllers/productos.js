@@ -110,7 +110,7 @@ export class productosController {
       const producto = await productosModel.create({
         nombre: nombre.trim(),
         descripcion: descripcion?.trim(),
-        precio: precio,
+        precio: Number(precio),
         img_prodcto,
       });
 
