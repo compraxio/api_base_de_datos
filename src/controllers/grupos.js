@@ -206,7 +206,7 @@ export class gruposController {
           return response.status(400).json({
             success: false,
             message: 'No se puede eliminar: existen negocios asociados a este grupo.',
-            error: "DependencyError",
+            error: 'DependencyError',
           });
         }
       }
