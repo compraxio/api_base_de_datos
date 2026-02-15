@@ -1,5 +1,6 @@
 import { gruposModel } from '../models/grupos.js';
 import { uploadBuffer } from '../lib/blobStorage.js';
+import { Prisma } from '@prisma/client/edge';
 
 export class gruposController {
   static async getAll(request, response) {
@@ -199,11 +200,21 @@ export class gruposController {
       });
     } catch (error) {
       console.error('Error al eliminar grupo:', error);
-      return response.status(500).json({
-        success: false,
-        message: 'Error interno del servidor',
-        error: error instanceof Error ? error.message : 'Error desconocido',
-      });
+
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2003') {
+          return response.status(400).json({
+            success: false,
+            message: 'No se puede eliminar: existen negocios asociados a este grupo.',
+            error: "DependencyError",
+          });
+        }
+      }
+        return response.status(500).json({
+          success: false,
+          message: 'Error interno del servidor',
+          error: error instanceof Error ? error.message : 'Error desconocido',
+        });
     }
   }
 }
