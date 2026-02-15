@@ -6,6 +6,6 @@ export const grupos = Router();
 
 grupos.get('/', gruposController.getAll);
 grupos.get('/:id', gruposController.getById);
-grupos.post('/', uploadGrupo.single('grupo'), gruposController.create);
+grupos.post('/', uploadGrupo.single('logo_grupo'), gruposController.create);
 grupos.put('/:id', gruposController.update);
 grupos.delete('/:id', gruposController.delete);
