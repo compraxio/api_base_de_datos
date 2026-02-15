@@ -1,6 +1,6 @@
 import { eventosModel } from '../models/eventos.js';
 import { uploadBuffer } from '../lib/blobStorage.js';
-import { Prisma } from '@prisma/client/edge';
+import { Prisma } from '@prisma/client';
 
 export class eventosController {
   static async getAll(request, response) {

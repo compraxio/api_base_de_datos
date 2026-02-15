@@ -1,6 +1,6 @@
 import { fasesModel } from '../models/fases.js';
 import { uploadBuffer } from '../lib/blobStorage.js';
-import { Prisma } from '@prisma/client/edge';
+import { Prisma } from '@prisma/client';
 export class fasesController {
   static async getAll(request, response) {
     try {
