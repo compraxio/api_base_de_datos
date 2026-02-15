@@ -1,6 +1,6 @@
 import { gruposModel } from '../models/grupos.js';
 import { uploadBuffer } from '../lib/blobStorage.js';
-import { Prisma } from '@prisma/client/edge';
+import { Prisma } from '@prisma/client';
 
 export class gruposController {
   static async getAll(request, response) {
